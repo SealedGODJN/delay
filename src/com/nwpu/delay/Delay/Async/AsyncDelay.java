@@ -261,7 +261,7 @@ public class AsyncDelay {
                 PSubA664 = subRDIU.getSubPort().getSamplePeriod();
                 double TasyncA664 = Math.min(PPubA664,PSubA664);
                 AsyncDelay = Tasyncdata + TasyncA664;
-            }else if(subPort.getType().equals("HFSamplingPort") || subPort.getType().equals("HFQueuingPort")){
+            }else if(subPort.getType().equals("HFSamplingPort") || subPort.getType().equals("HFQueuingPort")){ //Analog to A664
                 PPub =pubRDIU.getPubPort().getRefreshPeriod();
                AsyncDelay = calculatePSub(subEndApp);
             }
