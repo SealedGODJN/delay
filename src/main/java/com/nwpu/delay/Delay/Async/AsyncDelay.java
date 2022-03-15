@@ -30,9 +30,13 @@ public class AsyncDelay {
     public double calculatePPub(EndAppNode pubEndApp) {
         // 发送端的发送端口
         PortNode pubPort = pubEndApp.getPort();
+
+        // 1t-1t-1t
         if(pubPort.getType().equals("A653SamplingPort") || pubPort.getType().equals("HFSamplingPort")){
             PPub = pubPort.getRefreshPeriod();
-        } else if(pubPort.getType().equals("A653QueuingPort") || pubPort.getType().equals("HFQueuingPort")){
+        }
+        // 1t-1t-2
+        else if(pubPort.getType().equals("A653QueuingPort") || pubPort.getType().equals("HFQueuingPort")){
             if (pubPort instanceof A664QueuingPortNode) {
                 // 为了获取queueLength属性
                 A664QueuingPortNode temp = (A664QueuingPortNode) pubPort;
@@ -51,18 +55,25 @@ public class AsyncDelay {
     public double calculatePSub(EndAppNode subEndApp) {
         // 接收端的接受端口
         PortNode subPort = subEndApp.getPort();
+        // 1t-1t-1t-1t
         if(subPort.getType().equals("A653SamplingPort") ||subPort.getType().equals("A653QueuingPort")
                 ||subPort.getType().equals("HFSamplingPort") ||subPort.getType().equals("HFQueuingPort") ){
             PSub = subPort.getSamplePeriod();
         }
+        // 1t-1t-1t-2-1t
         if(PPub >= PSub){
             AsyncDelay = PSub;
             return PSub;
-        }else if(PPub < PSub){
+        }
+        // 1t-1t-1t-2-2t
+        else if(PPub < PSub){
+            // 1t-1t-1t-2-2t-1t
             if(subPort.getType().equals("A653SamplingPort") || subPort.getType().equals("HFSamplingPort")){
                 AsyncDelay =PPub;
                 return PPub;
-            }else if(subPort.getType().equals("A653QueuingPort") || subPort.getType().equals("HFQueuingPort")){
+            }
+            // 1t-1t-1t-2-2t-1f/2t
+            else if(subPort.getType().equals("A653QueuingPort") || subPort.getType().equals("HFQueuingPort")){
                 AsyncDelay = PSub;
                 return PSub;
             }
@@ -107,13 +118,22 @@ public class AsyncDelay {
 
     /**
      * 计算异步延迟
+     *
+     * RPMessage isLocal 判断消息是否过网通信
+     * 例如：消息从一个RDIU端口到另一个RDIU端口
+     *
      * @param rpMessage 一条rp消息
      * @return 根据发送端和接收端，计算对应的异步延迟
      */
     public double calculateAsyncDelay(RPMessage rpMessage) {
 
-        // 1. 找发送端和接收端
-        // 1.1 判断rpMessage pubEndApp是A653还是LRU
+        // 不过网通信
+        if(rpMessage.isLocal) {
+            return 0;
+        }
+
+        // 找发送端和接收端
+        // 判断rpMessage pubEndApp是A653还是LRU
 
         // 发送端
         EndAppNode pubEndApp = rpMessage.getPubEndApp();
@@ -124,54 +144,66 @@ public class AsyncDelay {
         PortNode subPort = subEndApp.getPort();
         RIUAppNode subRDIU =  rpMessage.getSubRDIU();
 
-        // 1.1.1 发送端是A653
-        if (pubEndApp.type.equals("A653Application")) {
+        // 发送端是A653
+        // 1
+        if (pubEndApp.getType().equals("A653Application")) {
 
-            // 1.1.1.1 判断接收端是谁？是A653 or LRU
+            // 判断接收端是谁？是A653 or LRU
             String subEndAppType = subEndApp.getType();
+            // 1t-1
             switch (subEndAppType) {
-                // 1.1.1.1.1 接收端是A653
+                // 接收端是A653
+                //1t-1t
                 case "ApplicationComponent":
                     // 计算发送端的PPub
                     PPub = calculatePPub(pubEndApp);
                     // 直接计算得出最终的异步延迟
                     AsyncDelay = calculatePSub(subEndApp);
-                    break;
+                    return AsyncDelay;
 
-                // 1.1.1.1.2 接收端不是A653
+                // 接收端不是A653
+                // 1t-2
                 default:
                     // 判断RDIU的接收端口是否是CANPortNode
 
-                    // 1.1.1.1.2.1 RDIU的接收端口是CANPort
+                    // RDIU的接收端口是CANPort
                     // TODO:要通过RDIU的发送端口来判断？还是，用接收端的接收端口来判断端口的类型？
                     PortNode subport = subRDIU.getSubPort();
 
                     // 场景4:A653->CAN
+                    // 1t-2-1
                     if (subport.getType().equals("CANPort")) {
                         AsyncDelay = calculateSubCAN(pubEndApp, subRDIU);
+                        return AsyncDelay;
                     }
+                    // 1t-2-2
                     // 场景5:A653->A429
                     else if(subport.getType().equals("A429Port"))  {
                         AsyncDelay = subRDIU.getSubPort().getSamplePeriod();
+                        return AsyncDelay;
                     }
+                    // 1t-2-3
                     // 场景3:A653->AnalogPort
                     else if(subport.getType().equals("AnalogPort")){
                         // 计算发送端的PPub
                         PPub = calculatePPub(pubEndApp);
                         // 直接计算得出最终的异步延迟
                         AsyncDelay = calculatePSub(subEndApp);
+                        return AsyncDelay;
                     }
+                    // 1t-2-4
                     // 场景2:A653->A664
                     else if(subport.getType().equals("HFSamplingPort") || subport.getType().equals("HFQueuingPort")){
                         // 计算发送端的PPub
                         PPub = calculatePPub(pubEndApp);
                         // 直接计算得出最终的异步延迟
                         AsyncDelay = calculatePSub(subEndApp);
+                        return AsyncDelay;
                     }
                     break;
             }
         }
-        // 1.1.2 发送端不是A653，是LRU或者RDIU
+        // 发送端不是A653，是LRU或者RDIU
         else if (pubPort.getType().equals("CANPort")) {
             double arguments1,arguments2,arguments3;
             double Tasyncdate,TasyncA664;
@@ -185,32 +217,40 @@ public class AsyncDelay {
                 PSubA664 = subRDIU.getSubPort().getSamplePeriod();
                 TasyncA664 = Math.min(PPubA664,PSubA664);
                 AsyncDelay = Tasyncdate + TasyncA664;
+                return AsyncDelay;
             } else if(subPort.getType().equals("A653QueuingPort")) {                  // CAN to A653应用
                 AsyncDelay =subPort.getSamplePeriod();
+                return AsyncDelay;
             } else if(subPort.getType().equals("A653SamplingPort")){                   // CAN to A653应用
                 PPub = pubRDIU.getPubPort().getRefreshPeriod();
                 PSub = subPort.getSamplePeriod();
                 PCAN = pubPort.getRefreshPeriod();
                 AsyncDelay = Math.max(Math.min(PPub,PSub),Math.min(PCAN,PSub));
+                return AsyncDelay;
             } else if(subPort.getType().equals("HFQueuingPort")){                       // CAN to A664
                 AsyncDelay =subPort.getSamplePeriod();
+                return AsyncDelay;
             } else if(subPort.getType().equals("HFSamplingPort")){                      // CAN to A664
                 PPub = pubRDIU.getPubPort().getRefreshPeriod();
                 PSub = subPort.getSamplePeriod();
                 PCAN = pubPort.getRefreshPeriod();
                 AsyncDelay = Math.max(Math.min(PPub,PSub),Math.min(PCAN,PSub));
+                return AsyncDelay;
             } else if(subPort.getType().equals("AnalogPort")){                         // CAN to AnalogPort
                 PPub = pubRDIU.getPubPort().getRefreshPeriod();
                 PSub = subPort.getSamplePeriod();
                 PCAN = pubPort.getRefreshPeriod();
                 AsyncDelay = Math.max(Math.min(PPub,PSub),Math.min(PCAN,PSub));
+                return AsyncDelay;
             } else if(subPort.getType().equals("A429Port")){                            // CAN to A429
                 AsyncDelay =subPort.getSamplePeriod();
+                return AsyncDelay;
             }
         }
         else if (pubPort.getType().equals("A429Port")) {
             if(subPort.getType().equals("A429Port")){                                                             //A429 to A429
                 AsyncDelay = subRDIU.getSubPort().getSamplePeriod();
+                return AsyncDelay;
             }
             // excel中没有A429->Analog
 //            else if(subPort.getType().equals("AnalogPort")){
@@ -223,6 +263,7 @@ public class AsyncDelay {
                     int queueLength = temp.getQueueLength();
                     PPub = pubPort.getRefreshPeriod() * queueLength;
                     AsyncDelay = calculatePSub(subEndApp);
+                    return AsyncDelay;
                 } else {
                     System.out.println("类型转换错误:PortNode->A664QueuingPortNode");
                 }
@@ -234,6 +275,7 @@ public class AsyncDelay {
                     int queueLength = temp.getQueueLength();
                     PPub = pubPort.getRefreshPeriod() * queueLength;
                     AsyncDelay = calculatePSub(subEndApp);
+                    return AsyncDelay;
                 } else {
                     System.out.println("类型转换错误:PortNode->A664QueuingPortNode");
                 }
@@ -247,11 +289,13 @@ public class AsyncDelay {
                 PPub = pubRDIU.getPubPort().getRefreshPeriod();
                 PSub = subRDIU.getSubPort().getSamplePeriod();
                 AsyncDelay = Math.min(PPub,PSub);
+                return AsyncDelay;
             }else if(subPort.getType().equals("A429Port")){                  //Analog to A429
                     //TODO
             }else if(subEndApp.getType().equals("A653Application")){          //Analog to A653应用
                 PPub = pubRDIU.getPubPort().getRefreshPeriod();
                 AsyncDelay = calculatePSub(subEndApp);
+                return AsyncDelay;
             }else if(subPort.getType().equals("CANPort")){                  //Analog to CANPort
                 double agruments1 = PPubA664 =  pubRDIU.getPubPort().getRefreshPeriod();
                 double  agruments2 = subRDIU.getPubPort().getRefreshPeriod();
@@ -261,9 +305,11 @@ public class AsyncDelay {
                 PSubA664 = subRDIU.getSubPort().getSamplePeriod();
                 double TasyncA664 = Math.min(PPubA664,PSubA664);
                 AsyncDelay = Tasyncdata + TasyncA664;
+                return AsyncDelay;
             }else if(subPort.getType().equals("HFSamplingPort") || subPort.getType().equals("HFQueuingPort")){ //Analog to A664
                 PPub =pubRDIU.getPubPort().getRefreshPeriod();
-               AsyncDelay = calculatePSub(subEndApp);
+                AsyncDelay = calculatePSub(subEndApp);
+                return AsyncDelay;
             }
 
         } else if (pubPort.getType().equals("HFSamplingPort") || pubPort.getType().equals("HFQueuingPort")) {
@@ -273,7 +319,7 @@ public class AsyncDelay {
                 PPub = calculatePPub(pubEndApp);
                 // 直接计算得出最终的异步延迟
                 AsyncDelay = calculatePSub(subEndApp);
-
+                return AsyncDelay;
             }
             // 场景7:A664->A664
             else if (subPort.getType().equals("HFSamplingPort") || subPort.getType().equals("HFQueuingPort")) {
@@ -281,6 +327,7 @@ public class AsyncDelay {
                 PPub = calculatePPub(pubEndApp);
                 // 直接计算得出最终的异步延迟
                 AsyncDelay = calculatePSub(subEndApp);
+                return AsyncDelay;
             }
             // 场景8:A664->Analog
             else if (subPort.getType().equals("AnalogPort")) {
@@ -288,15 +335,18 @@ public class AsyncDelay {
                 PPub = calculatePPub(pubEndApp);
                 // 直接计算得出最终的异步延迟
                 AsyncDelay = calculatePSub(subEndApp);
+                return AsyncDelay;
             }
             // 场景9:A664->CAN
             else if(subPort.getType().equals("CANPort")){
                 AsyncDelay = calculateSubCAN(pubEndApp, subRDIU);
+                return AsyncDelay;
             }
             // 场景10:A664->A429
             else if(subPort.getType().equals("A429Port")){
                 PSub = subRDIU.getPubPort().getSamplePeriod();
                 AsyncDelay = PSub;
+                return AsyncDelay;
             }
         }
         return AsyncDelay;

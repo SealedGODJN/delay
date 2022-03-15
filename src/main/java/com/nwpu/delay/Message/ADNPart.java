@@ -1,6 +1,7 @@
 package com.nwpu.delay.Message;
 
-import org.omg.CORBA.PUBLIC_MEMBER;
+
+import java.util.List;
 
 public class ADNPart {
     public VirtualLinkType virtualLinkType;
