@@ -1,5 +1,8 @@
 package com.nwpu.delay.Message;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class RPMessage {
     public String rpGuid;
     public RPDefType rpDef;
@@ -11,6 +14,24 @@ public class RPMessage {
     public int scenarioId;
     public boolean isLocal;
     public String errorMsg;
+    public double MessageSize;
+
+
+    /**
+     * TODO：方法待实现
+     * @return 返回一个消息经过的所有节点
+     */
+    public List<BaseDeviceAndSwitchNode> getAllDeviceNodes() {
+        return new ArrayList<>();
+    }
+
+    public double getMessageSize() {
+        return MessageSize;
+    }
+
+    public void setMessageSize(double messageSize) {
+        MessageSize = messageSize;
+    }
 
     public String getRpGuid() {
         return rpGuid;
