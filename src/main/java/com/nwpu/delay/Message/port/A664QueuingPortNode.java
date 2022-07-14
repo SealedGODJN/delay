@@ -1,4 +1,4 @@
-package com.nwpu.delay.Message;
+package com.nwpu.delay.Message.port;
 
 public class A664QueuingPortNode extends A664TypePortNode {
     public int queueLength;

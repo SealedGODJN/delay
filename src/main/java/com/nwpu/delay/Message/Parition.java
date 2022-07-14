@@ -1,5 +1,7 @@
 package com.nwpu.delay.Message;
 
+import com.nwpu.delay.Message.port.A664TypePortNode;
+
 public class Parition {
     /**
      * 分区持续时间

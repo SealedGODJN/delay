@@ -1,5 +1,7 @@
 package com.nwpu.delay.Message;
 
+import com.nwpu.delay.Message.port.PortNode;
+
 public class EndAppNode extends BaseDeviceNode{
     public String ata;
     public PortNode port;

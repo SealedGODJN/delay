@@ -1,4 +1,4 @@
-package com.nwpu.delay.Message;
+package com.nwpu.delay.Message.port;
 
 public class CANPortNode extends NonA664TypePortNode{
     public String canBiteRate;

@@ -1,4 +1,4 @@
-package com.nwpu.delay.Message;
+package com.nwpu.delay.Message.port;
 
 public class A653SamplingPortNode extends A664SamplingPortNode {
     /**

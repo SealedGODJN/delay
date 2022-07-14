@@ -1,6 +1,6 @@
-package com.nwpu.delay.Message;
+package com.nwpu.delay.Message.port;
 
-public class PortNode {
+public abstract class PortNode {
     public String type;
     public String name;
     public String guid;
@@ -12,6 +12,13 @@ public class PortNode {
      * 采样周期
      */
     public double samplePeriod;
+
+    public PortNode(String type, String name, String guid) {
+        super();
+        this.type = type;
+        this.name = name;
+        this.guid = guid;
+    }
 
     public String getType() {
         return type;

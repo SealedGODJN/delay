@@ -2,6 +2,10 @@ package com.nwpu.delay;
 
 import com.nwpu.delay.Delay.Async.AsyncDelay;
 import com.nwpu.delay.Message.*;
+import com.nwpu.delay.Message.port.A653QueuingPortNode;
+import com.nwpu.delay.Message.port.A653SamplingPortNode;
+import com.nwpu.delay.Message.port.A664QueuingPortNode;
+import com.nwpu.delay.Message.port.PortNode;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -30,7 +34,7 @@ public class TestAsyncDelay {
         // 设置发送端终端为A653Application
         pubEndApp.setType("A653Application");
         //设置发送端的端口
-        PortNode pubPort = new PortNode();
+        PortNode pubPort = new A653SamplingPortNode();
         pubEndApp.setPort(pubPort);
         pubPort.setType("A653SamplingPort");
         double refreshPeriodPub = 10.0;
@@ -43,7 +47,7 @@ public class TestAsyncDelay {
         subEndApp.setType("ApplicationComponent");
 
         //设置接收端的端口
-        PortNode subPort = new PortNode();
+        PortNode subPort = new A653SamplingPortNode();
         subEndApp.setPort(subPort);
         subPort.setType("A653SamplingPort");
         // PPub == PSub
@@ -80,7 +84,7 @@ public class TestAsyncDelay {
         // 设置发送端终端为A653Application
         pubEndApp.setType("A653Application");
         //设置发送端的端口
-        PortNode pubPort = new PortNode();
+        PortNode pubPort = new A653SamplingPortNode();
         pubEndApp.setPort(pubPort);
         pubPort.setType("A653SamplingPort");
         double refreshPeriodPub = 5.0;
@@ -93,7 +97,7 @@ public class TestAsyncDelay {
         subEndApp.setType("ApplicationComponent");
 
         // 设置接收端的端口
-        PortNode subPort = new PortNode();
+        PortNode subPort = new A653SamplingPortNode();
         subEndApp.setPort(subPort);
         subPort.setType("A653SamplingPort");
         // PPub < PSub
@@ -134,7 +138,7 @@ public class TestAsyncDelay {
         // 设置发送端终端为A653Application
         pubEndApp.setType("A653Application");
         //设置发送端的端口
-        PortNode pubPort = new PortNode();
+        PortNode pubPort = new A653QueuingPortNode();
         pubEndApp.setPort(pubPort);
         pubPort.setType("A653QueuingPort");
         double refreshPeriodPub = 5.0;
@@ -147,7 +151,7 @@ public class TestAsyncDelay {
         subEndApp.setType("ApplicationComponent");
 
         // 设置接收端的端口
-        PortNode subPort = new PortNode();
+        PortNode subPort = new A653SamplingPortNode();
         subEndApp.setPort(subPort);
         subPort.setType("A653SamplingPort");
         // PPub == PSub

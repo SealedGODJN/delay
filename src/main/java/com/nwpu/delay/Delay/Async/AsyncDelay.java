@@ -1,6 +1,9 @@
 package com.nwpu.delay.Delay.Async;
 
 import com.nwpu.delay.Message.*;
+import com.nwpu.delay.Message.port.A664QueuingPortNode;
+import com.nwpu.delay.Message.port.CANPortNode;
+import com.nwpu.delay.Message.port.PortNode;
 
 public class AsyncDelay {
     /**
@@ -312,7 +315,8 @@ public class AsyncDelay {
                 return AsyncDelay;
             }
 
-        } else if (pubPort.getType().equals("HFSamplingPort") || pubPort.getType().equals("HFQueuingPort")) {
+        }
+        else if (pubPort.getType().equals("HFSamplingPort") || pubPort.getType().equals("HFQueuingPort")) {
             // 场景6:A664->A653
             if (subPort.getType().equals("A653Application")) {
                 // 计算发送端的PPub

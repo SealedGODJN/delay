@@ -1,5 +1,7 @@
 package com.nwpu.delay.Message;
 
+import com.nwpu.delay.Message.port.PortNode;
+
 public class RIUAppNode extends BaseDeviceNode{
     public String riuType;
     public boolean count;
