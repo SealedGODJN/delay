@@ -8,6 +8,10 @@ public class A653SamplingPortNode extends A664SamplingPortNode {
      */
     public double messageSize;
 
+    public A653SamplingPortNode(String type, String name, String guid) {
+        super(type, name, guid);
+    }
+
     public double getMessageSize() {
         return messageSize;
     }

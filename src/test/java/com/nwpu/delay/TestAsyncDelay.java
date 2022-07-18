@@ -34,9 +34,9 @@ public class TestAsyncDelay {
         // 设置发送端终端为A653Application
         pubEndApp.setType("A653Application");
         //设置发送端的端口
-        PortNode pubPort = new A653SamplingPortNode();
+        PortNode pubPort = new A653SamplingPortNode("A653SamplingPort", "", "");
         pubEndApp.setPort(pubPort);
-        pubPort.setType("A653SamplingPort");
+//        pubPort.setType("A653SamplingPort");
         double refreshPeriodPub = 10.0;
         pubPort.setRefreshPeriod(refreshPeriodPub);
         rpMessage.setPubEndApp(pubEndApp);

@@ -7,6 +7,10 @@ public class CANPortNode extends NonA664TypePortNode{
      */
     public String canMessagePortocolType;
 
+    public CANPortNode(String type, String name, String guid) {
+        super(type, name, guid);
+    }
+
     public String getCanBiteRate() {
         return canBiteRate;
     }

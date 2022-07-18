@@ -4,14 +4,7 @@ public abstract class PortNode {
     public String type;
     public String name;
     public String guid;
-    /**
-     * 刷新周期
-     */
-    public double refreshPeriod;
-    /**
-     * 采样周期
-     */
-    public double samplePeriod;
+
 
     public PortNode(String type, String name, String guid) {
         super();
@@ -42,21 +35,5 @@ public abstract class PortNode {
 
     public void setGuid(String guid) {
         this.guid = guid;
-    }
-
-    public double getRefreshPeriod() {
-        return refreshPeriod;
-    }
-
-    public void setRefreshPeriod(double refreshPeriod) {
-        this.refreshPeriod = refreshPeriod;
-    }
-
-    public double getSamplePeriod() {
-        return samplePeriod;
-    }
-
-    public void setSamplePeriod(double samplePeriod) {
-        this.samplePeriod = samplePeriod;
     }
 }

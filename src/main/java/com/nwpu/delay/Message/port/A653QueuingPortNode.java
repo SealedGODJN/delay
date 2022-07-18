@@ -8,6 +8,10 @@ public class A653QueuingPortNode extends A664QueuingPortNode {
      */
     public double messageSize;
 
+    public A653QueuingPortNode(String type, String name, String guid) {
+        super(type, name, guid);
+    }
+
     public double getMessageSize() {
         return messageSize;
     }
