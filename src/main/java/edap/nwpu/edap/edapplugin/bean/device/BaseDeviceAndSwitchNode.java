@@ -1,13 +1,13 @@
 package edap.nwpu.edap.edapplugin.bean.device;
 
-import com.nwpu.delay.Message.hardware.Hardaware;
+import edap.nwpu.edap.edapplugin.bean.hardware.Hardware;
 
 public class BaseDeviceAndSwitchNode {
     /**
      * 根据这个type判断是哪一种应用：A653Application、HostedFunction、RemoteGateway、ARS、ACS
      */
     public String type;
-    public Hardaware hardaware;
+    public Hardware hardware;
 
     public String getType() {
         return type;
@@ -17,11 +17,11 @@ public class BaseDeviceAndSwitchNode {
         this.type = type;
     }
 
-    public Hardaware getHardaware() {
-        return hardaware;
+    public Hardware getHardware() {
+        return hardware;
     }
 
-    public void setHardaware(Hardaware hardaware) {
-        this.hardaware = hardaware;
+    public void setHardware(Hardware hardware) {
+        this.hardware = hardware;
     }
 }

@@ -6,5 +6,5 @@ import edap.nwpu.edap.edapplugin.bean.hardware.Hardware;
 public class SwitchNode extends BaseDeviceAndSwitchNode {
     public int subPort;
     public int pubPort;
-    public Hardware hardaware;
+    public Hardware hardware;
 }

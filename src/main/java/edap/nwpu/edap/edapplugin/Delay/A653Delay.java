@@ -1,6 +1,6 @@
 package edap.nwpu.edap.edapplugin.Delay;
 
-import com.nwpu.delay.Message.*;
+import com.careri.as.businessmodel.model.A653ApplicationComponentClassType;
 import edap.nwpu.edap.edapplugin.bean.device.GPMAppNode;
 import edap.nwpu.edap.edapplugin.bean.port.PortNode;
 import edap.nwpu.edap.edapplugin.bean.Parition;
@@ -10,10 +10,10 @@ import java.util.List;
 
 public class A653Delay {
 
-    private Parition pubParition;
-    private Parition subParition;
-    private List<Parition> pubAllParition;
-    private List<Parition> subAllParition;
+    private A653ApplicationComponentClassType pubParition;
+    private A653ApplicationComponentClassType subParition;
+    private List<A653ApplicationComponentClassType> pubAllParition;
+    private List<A653ApplicationComponentClassType> subAllParition;
 
     public double calculateA653Delay(GPMAppNode pubEndApp, GPMAppNode subEndApp, boolean isLocal) {
         double delay = 0;
@@ -27,16 +27,16 @@ public class A653Delay {
             Iterator<A653ApplicationComponentClassType> iterator = pubAllParition.iterator();
             while (iterator.hasNext()) {
                 A653ApplicationComponentClassType temp = iterator.next();
-                if ( temp.id.equals(pubEndApp.getPubParition().getId()) ) {
-                    break;
-                }
+//                if ( temp.id.equals(pubEndApp.getPubParition().getId()) ) {
+//                    break;
+//                }
             }
             while (iterator.hasNext()) {
                 A653ApplicationComponentClassType temp = iterator.next();
-                delay += temp.duration;
-                if ( temp.id.equals(subEndApp.getSubParition().getId()) ) {
-                    break;
-                }
+//                delay += temp.duration;
+//                if ( temp.id.equals(subEndApp.getSubParition().getId()) ) {
+//                    break;
+//                }
             }
             return delay;
         }
@@ -47,7 +47,7 @@ public class A653Delay {
          * 只需要计算接收端GPM的调度时间
          */
         for (A653ApplicationComponentClassType parition : subAllParition) {
-            delay += parition.duration;
+//            delay += parition.duration;
         }
         delay /= subAllParition.size();
 
