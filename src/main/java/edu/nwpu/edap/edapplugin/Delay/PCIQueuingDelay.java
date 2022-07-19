@@ -1,6 +1,7 @@
 package edu.nwpu.edap.edapplugin.Delay;
 
 import com.careri.as.businessmodel.model.A653ApplicationComponentType;
+import com.careri.as.businessmodel.model.A653QueuingPortDefType;
 import com.careri.as.businessmodel.model.RPType;
 import edu.nwpu.edap.edapplugin.bean.RPMessage;
 import edu.nwpu.edap.edapplugin.bean.device.EndAppNode;
@@ -22,9 +23,14 @@ public class PCIQueuingDelay {
      */
     public double calculatePCIQueuingDelay(RPMessage rpMessage) {
         double PCIQueuingDelay = 0;
+        EndAppNode pub = rpMessage.getPubEndApp();
+        if (pub == null) {
+            System.out.println("===========发送端终端不存在===========");
+            return PCIQueuingDelay;
+        }
         //发送端类型为A653
-        if(rpMessage.getPubEndApp().equals("A653Application")){
-            PortNode pubPort = rpMessage.getPubEndApp().getPort();
+        if (pub.getType().equals("A653Application")) {
+            PortNode pubPort = pub.getPort();
             //发送端端口类型
             if (pubPort.getType().equals("A653QueuingPort")) {
                 // 需要端口队列长度
@@ -53,13 +59,17 @@ public class PCIQueuingDelay {
 
                     //遍历RP消息计算排队时间
                     for (RPMessage rp : allA653RP){
-                        PCIQueuingDelay = 0;
+                        String PubPortGuid = rp.getPubEndApp().getPort().getGuid();
+                        A653QueuingPortDefType portDefType = LoadICDDataTest.getInstance().getA653QueuingPortDefByGuid(PubPortGuid);
+                        Integer messageSize = portDefType.getMessageSize();
+                        Integer refreshPeriod = portDefType.getRefreshPeriod().intValue();
+                        PCIQueuingDelay += messageSize / refreshPeriod;
                     }
                 }
             } else {
                 System.out.println("==========该端口是A653SamplingPort==========");
             }
-        }else{
+        } else {
 
         }
         return PCIQueuingDelay;

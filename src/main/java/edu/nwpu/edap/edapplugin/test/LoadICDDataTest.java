@@ -101,6 +101,7 @@ public class LoadICDDataTest {
 	Map<String, A653SamplingPortDefType> a653SamplingDefMap;
 	
 	Map<String, A653QueuingPortType> a653QueuingMap;
+
 	Map<String, A653QueuingPortDefType> a653QueuingDefMap;
 	
 	Map<Integer, VirtualLinkType> virtualLinkMap;
