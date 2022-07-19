@@ -52,7 +52,7 @@ public class PCIQueuingDelay {
                     }
 
                     //遍历RP消息计算排队时间
-                    for (RPMessage rpMsgs : allA653RP){
+                    for (RPMessage rp : allA653RP){
                         PCIQueuingDelay = 0;
                     }
                 }
