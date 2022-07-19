@@ -3,25 +3,28 @@ package edu.nwpu.edap.edapplugin.bean.device;
 import edu.nwpu.edap.edapplugin.bean.hardware.Hardware;
 
 public class BaseDeviceAndSwitchNode {
-    /**
-     * 根据这个type判断是哪一种应用：A653Application、HostedFunction、RemoteGateway、ARS、ACS
-     */
-    public String type;
-    public Hardware hardware;
 
-    public String getType() {
-        return type;
-    }
+	//设备节点种类，包括ARS、ACS、A653Application、HostedFunction、RemoteGateway
+	protected String type;
+	
+	//硬件信息
+	protected Hardware hardware;
 
-    public void setType(String type) {
-        this.type = type;
-    }
+	public String getType() {
+		return type;
+	}
 
-    public Hardware getHardware() {
-        return hardware;
-    }
+	public void setType(String type) {
+		this.type = type;
+	}
 
-    public void setHardware(Hardware hardware) {
-        this.hardware = hardware;
-    }
+	public Hardware getHardware() {
+		return hardware;
+	}
+
+	public void setHardware(Hardware hardware) {
+		this.hardware = hardware;
+	}
+	
+	
 }

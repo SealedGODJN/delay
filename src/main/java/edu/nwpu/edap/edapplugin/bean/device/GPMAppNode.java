@@ -1,98 +1,80 @@
 package edu.nwpu.edap.edapplugin.bean.device;
 
-import edu.nwpu.edap.edapplugin.Parition;
+public class GPMAppNode extends EndAppNode {
 
-import java.util.List;
+	// 延迟
+	protected double latency;
 
-public class GPMAppNode extends EndAppNode{
-        public boolean count;
-        public double latency;
-        public double jitter;
-        public double latencyThreshold;
-        public double jitterThreshold;
-        public double maxMessageLatency;
-        /**
-         * 发送分区
-         */
-        public Parition pubParition;
-        /**
-         * 接收分区
-         */
-        public Parition subParition;
-        /**
-         * 分区调度表
-         */
-        public List<Parition> allParition;
+	// 抖动
+	protected double jitter;
 
-        public boolean isCount() {
-                return count;
-        }
+	// 延迟上限
+	protected double latencyThreshold;
 
-        public void setCount(boolean count) {
-                this.count = count;
-        }
+	// 抖动上限
+	protected double JitterThreshold;
+	
+	//最大消息延迟，区段接口文件中获得
+	protected double maxMessageLatency;
+	
+	//是否参与延迟计算
+	protected boolean count;
 
-        public double getLatency() {
-                return latency;
-        }
+	public double getLatency() {
+		return latency;
+	}
 
-        public void setLatency(double latency) {
-                this.latency = latency;
-        }
+	public void setLatency(double latency) {
+		this.latency = latency;
+	}
 
-        public double getJitter() {
-                return jitter;
-        }
+	public double getJitter() {
+		return jitter;
+	}
 
-        public void setJitter(double jitter) {
-                this.jitter = jitter;
-        }
+	public void setJitter(double jitter) {
+		this.jitter = jitter;
+	}
 
-        public double getLatencyThreshold() {
-                return latencyThreshold;
-        }
+	public double getLatencyThreshold() {
+		return latencyThreshold;
+	}
 
-        public void setLatencyThreshold(double latencyThreshold) {
-                this.latencyThreshold = latencyThreshold;
-        }
+	public void setLatencyThreshold(double latencyThreshold) {
+		this.latencyThreshold = latencyThreshold;
+	}
 
-        public double getJitterThreshold() {
-                return jitterThreshold;
-        }
+	public double getJitterThreshold() {
+		return JitterThreshold;
+	}
 
-        public void setJitterThreshold(double jitterThreshold) {
-                this.jitterThreshold = jitterThreshold;
-        }
+	public void setJitterThreshold(double jitterThreshold) {
+		JitterThreshold = jitterThreshold;
+	}
 
-        public double getMaxMessageLatency() {
-                return maxMessageLatency;
-        }
+	public double getMaxMessageLatency() {
+		return maxMessageLatency;
+	}
 
-        public void setMaxMessageLatency(double maxMessageLatency) {
-                this.maxMessageLatency = maxMessageLatency;
-        }
+	public void setMaxMessageLatency(double maxMessageLatency) {
+		this.maxMessageLatency = maxMessageLatency;
+	}
 
-        public Parition getPubParition() {
-                return pubParition;
-        }
+	public boolean isCount() {
+		return count;
+	}
 
-        public void setPubParition(Parition pubParition) {
-                this.pubParition = pubParition;
-        }
+	public void setCount(boolean count) {
+		this.count = count;
+	}
 
-        public Parition getSubParition() {
-                return subParition;
-        }
-
-        public void setSubParition(Parition subParition) {
-                this.subParition = subParition;
-        }
-
-        public List<Parition> getAllParition() {
-                return allParition;
-        }
-
-        public void setAllParition(List<Parition> allParition) {
-                this.allParition = allParition;
-        }
+	@Override
+	public String toString() {
+		return "GPMAppNode [latency=" + latency + ", jitter=" + jitter + ", latencyThreshold=" + latencyThreshold
+				+ ", JitterThreshold=" + JitterThreshold + ", maxMessageLatency=" + maxMessageLatency + ", ata=" + ata
+				+ ", port=" + port + ", portDef=" + portDef + ", name=" + name + ", guid=" + guid + ", samplePeriod="
+				+ samplePeriod + ", refreshPeriod=" + refreshPeriod + ", count=" + count + ", type=" + type
+				+ ", hardware=" + hardware + "]";
+	}
+	
 }

@@ -1,22 +1,14 @@
 package edu.nwpu.edap.edapplugin.bean.port;
 
-public class A653SamplingPortNode extends A664SamplingPortNode {
-    /**
-     * TODO
-     * 添加了messageSize属性
-     * 用于计算QueueLength
-     */
-    public double messageSize;
+public class A653SamplingPortNode extends A664SamplingPortNode{
 
-    public A653SamplingPortNode(String type, String name, String guid) {
-        super(type, name, guid);
-    }
+	public A653SamplingPortNode(String type, String name, String guid) {
+		super(type, name, guid);
+	}
 
-    public double getMessageSize() {
-        return messageSize;
-    }
+	@Override
+	public String toString() {
+		return "A653SamplingPortNode [type=" + type + ", name=" + name + ", guid=" + guid + "]";
+	}
 
-    public void setMessageSize(double messageSize) {
-        this.messageSize = messageSize;
-    }
 }

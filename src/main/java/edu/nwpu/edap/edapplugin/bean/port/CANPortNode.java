@@ -1,29 +1,37 @@
 package edu.nwpu.edap.edapplugin.bean.port;
 
 public class CANPortNode extends NonA664TypePortNode{
-    public String canBiteRate;
-    /**
-     * parametric/UNDEFINED/OMS/ODLF
-     */
-    public String canMessageProtocolType;
+	
+	//端口的CANBiteRate
+	protected String canBiteRate;
+	
+	//端口消息的协议
+	protected String canMessageProtocolType;
 
-    public CANPortNode(String type, String name, String guid) {
-        super(type, name, guid);
-    }
+	public CANPortNode(String type, String name, String guid) {
+		super(type, name, guid);
+	}
+	
+	public String getCanBiteRate() {
+		return canBiteRate;
+	}
 
-    public String getCanBiteRate() {
-        return canBiteRate;
-    }
+	public void setCanBiteRate(String canBiteRate) {
+		this.canBiteRate = canBiteRate;
+	}
 
-    public void setCanBiteRate(String canBiteRate) {
-        this.canBiteRate = canBiteRate;
-    }
+	public String getCanMessageProtocolType() {
+		return canMessageProtocolType;
+	}
 
-    public String getCanMessageProtocolType() {
-        return canMessageProtocolType;
-    }
+	public void setCanMessageProtocolType(String canMessageProtocolType) {
+		this.canMessageProtocolType = canMessageProtocolType;
+	}
 
-    public void setCanMessageProtocolType(String canMessageProtocolType) {
-        this.canMessageProtocolType = canMessageProtocolType;
-    }
+	@Override
+	public String toString() {
+		return "CANPortNode [canBiteRate=" + canBiteRate + ", canMessageProtocolType=" + canMessageProtocolType
+				+ ", physPortName=" + physPortName + ", type=" + type + ", name=" + name + ", guid=" + guid + "]";
+	}
+
 }

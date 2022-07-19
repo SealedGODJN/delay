@@ -4,44 +4,44 @@ import java.math.BigDecimal;
 
 public abstract class IncludeA664MsgTypeHardware extends Hardware{
 
-    protected BigDecimal ESTechLatencyRx;
+	protected BigDecimal ESTechLatencyRx;
+	
+	protected BigDecimal ESTechLatencyTx;
+	
+	protected String ESTransmitPolicy;
+	
+	protected String ESHighIntegrity;
 
-    protected BigDecimal ESTechLatencyTx;
+	public BigDecimal getESTechLatencyRx() {
+		return ESTechLatencyRx;
+	}
 
-    protected String ESTransmitPolicy;
+	public void setESTechLatencyRx(BigDecimal eSTechLatencyRx) {
+		ESTechLatencyRx = eSTechLatencyRx;
+	}
 
-    protected String ESHighIntegrity;
+	public BigDecimal getESTechLatencyTx() {
+		return ESTechLatencyTx;
+	}
 
-    public BigDecimal getESTechLatencyRx() {
-        return ESTechLatencyRx;
-    }
+	public void setESTechLatencyTx(BigDecimal eSTechLatencyTx) {
+		ESTechLatencyTx = eSTechLatencyTx;
+	}
 
-    public void setESTechLatencyRx(BigDecimal eSTechLatencyRx) {
-        ESTechLatencyRx = eSTechLatencyRx;
-    }
+	public String getESTransmitPolicy() {
+		return ESTransmitPolicy;
+	}
 
-    public BigDecimal getESTechLatencyTx() {
-        return ESTechLatencyTx;
-    }
+	public void setESTransmitPolicy(String eSTransmitPolicy) {
+		ESTransmitPolicy = eSTransmitPolicy;
+	}
 
-    public void setESTechLatencyTx(BigDecimal eSTechLatencyTx) {
-        ESTechLatencyTx = eSTechLatencyTx;
-    }
+	public String getESHighIntegrity() {
+		return ESHighIntegrity;
+	}
 
-    public String getESTransmitPolicy() {
-        return ESTransmitPolicy;
-    }
-
-    public void setESTransmitPolicy(String eSTransmitPolicy) {
-        ESTransmitPolicy = eSTransmitPolicy;
-    }
-
-    public String getESHighIntegrity() {
-        return ESHighIntegrity;
-    }
-
-    public void setESHighIntegrity(String eSHighIntegrity) {
-        ESHighIntegrity = eSHighIntegrity;
-    }
+	public void setESHighIntegrity(String eSHighIntegrity) {
+		ESHighIntegrity = eSHighIntegrity;
+	}
 
 }

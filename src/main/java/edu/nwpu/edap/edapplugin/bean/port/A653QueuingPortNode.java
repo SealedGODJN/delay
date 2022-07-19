@@ -1,22 +1,15 @@
 package edu.nwpu.edap.edapplugin.bean.port;
 
 public class A653QueuingPortNode extends A664QueuingPortNode {
-    /**
-     * TODO
-     * 添加了messageSize属性
-     * 用于计算QueueLength
-     */
-    public double messageSize;
 
-    public A653QueuingPortNode(String type, String name, String guid) {
-        super(type, name, guid);
-    }
+	public A653QueuingPortNode(String type, String name, String guid) {
+		super(type, name, guid);
+	}
 
-    public double getMessageSize() {
-        return messageSize;
-    }
+	@Override
+	public String toString() {
+		return "A653QueuingPortNode [queueLength=" + queueLength + ", type=" + type + ", name=" + name + ", guid="
+				+ guid + "]";
+	}
 
-    public void setMessageSize(double messageSize) {
-        this.messageSize = messageSize;
-    }
 }

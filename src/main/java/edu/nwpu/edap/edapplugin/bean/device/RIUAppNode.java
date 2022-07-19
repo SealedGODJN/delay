@@ -2,77 +2,104 @@ package edu.nwpu.edap.edapplugin.bean.device;
 
 import edu.nwpu.edap.edapplugin.bean.port.PortNode;
 
-public class RIUAppNode extends BaseDeviceNode{
-    public String riuType;
-    public boolean count;
-    public PortNode pubPort;
-    public PortNode subPort;
-    public double latency;
-    public double jitter;
-    public double latencyThreshold;
-    public double jitterThreshold;
+public class RIUAppNode extends BaseDeviceNode {
 
-    public String getRiuType() {
-        return riuType;
-    }
+	//RDIU的类型
+	protected String RIUType;
+	
+	//RDIU的发出端口
+	protected PortNode pubPort;
+	
+	//RDIU的接收端口
+	protected PortNode subPort;
+	
+	//延迟
+	protected double latency;
+	
+	//抖动
+	protected double jitter;
+	
+	//延迟上限
+	protected double latencyThreshold;
+	
+	//抖动上限
+	protected double JitterThreshold;
+	
+	//是否参与延迟计算
+	protected boolean count;
 
-    public void setRiuType(String riuType) {
-        this.riuType = riuType;
-    }
+	public String getRIUType() {
+		return RIUType;
+	}
 
-    public boolean isCount() {
-        return count;
-    }
+	public void setRIUType(String rIUType) {
+		RIUType = rIUType;
+	}
 
-    public void setCount(boolean count) {
-        this.count = count;
-    }
+	public PortNode getPubPort() {
+		return pubPort;
+	}
 
-    public PortNode getPubPort() {
-        return pubPort;
-    }
+	public void setPubPort(PortNode pubPort) {
+		this.pubPort = pubPort;
+	}
 
-    public void setPubPort(PortNode pubPort) {
-        this.pubPort = pubPort;
-    }
+	public PortNode getSubPort() {
+		return subPort;
+	}
 
-    public PortNode getSubPort() {
-        return subPort;
-    }
+	public void setSubPort(PortNode subPort) {
+		this.subPort = subPort;
+	}
 
-    public void setSubPort(PortNode subPort) {
-        this.subPort = subPort;
-    }
+	public double getLatency() {
+		return latency;
+	}
 
-    public double getLatency() {
-        return latency;
-    }
+	public void setLatency(double latency) {
+		this.latency = latency;
+	}
 
-    public void setLatency(double latency) {
-        this.latency = latency;
-    }
+	public double getJitter() {
+		return jitter;
+	}
 
-    public double getJitter() {
-        return jitter;
-    }
+	public void setJitter(double jitter) {
+		this.jitter = jitter;
+	}
 
-    public void setJitter(double jitter) {
-        this.jitter = jitter;
-    }
+	public double getLatencyThreshold() {
+		return latencyThreshold;
+	}
 
-    public double getLatencyThreshold() {
-        return latencyThreshold;
-    }
+	public void setLatencyThreshold(double latencyThreshold) {
+		this.latencyThreshold = latencyThreshold;
+	}
 
-    public void setLatencyThreshold(double latencyThreshold) {
-        this.latencyThreshold = latencyThreshold;
-    }
+	public double getJitterThreshold() {
+		return JitterThreshold;
+	}
 
-    public double getJitterThreshold() {
-        return jitterThreshold;
-    }
+	public void setJitterThreshold(double jitterThreshold) {
+		JitterThreshold = jitterThreshold;
+	}
 
-    public void setJitterThreshold(double jitterThreshold) {
-        this.jitterThreshold = jitterThreshold;
-    }
+	public boolean isCount() {
+		return count;
+	}
+
+	public void setCount(boolean count) {
+		this.count = count;
+	}
+
+	@Override
+	public String toString() {
+		return "RIUAppNode [RIUType=" + RIUType + ", pubPort=" + pubPort + ", subPort=" + subPort + ", latency="
+				+ latency + ", jitter=" + jitter + ", latencyThreshold=" + latencyThreshold + ", JitterThreshold="
+				+ JitterThreshold + ", name=" + name + ", guid=" + guid + ", samplePeriod=" + samplePeriod
+				+ ", refreshPeriod=" + refreshPeriod + ", count=" + count + ", type=" + type + ", hardware=" + hardware
+				+ "]";
+	}
+	
+	
 }
