@@ -154,7 +154,7 @@ public class AsyncDelay {
 
         // 发送端是A653
         // 1
-        if (pubEndApp.getType().equals("A653Application")) {
+        if (pubEndApp.getType().equals("A653ApplicationComponent")) {
 
             // 判断接收端是谁？是A653 or LRU
             String subEndAppType = subEndApp.getType();
@@ -281,7 +281,7 @@ public class AsyncDelay {
                     System.out.println("类型转换错误:PortNode->A664QueuingPortNode");
                 }
 
-            }else if(subEndApp.getType().equals("A653Application")){                                          //A429 to A653应用
+            }else if(subEndApp.getType().equals("A653ApplicationComponent")){                                          //A429 to A653应用
                 if (pubRDIU.getPubPort() instanceof A664QueuingPortNode) {
                     // 为了获取queueLength属性
                     A664QueuingPortNode temp = (A664QueuingPortNode) pubPort;
@@ -308,7 +308,7 @@ public class AsyncDelay {
                 return AsyncDelay;
             }else if(subPort.getType().equals("A429Port")){                  //Analog to A429
                 //TODO
-            }else if(subEndApp.getType().equals("A653Application")){          //Analog to A653应用
+            }else if(subEndApp.getType().equals("A653ApplicationComponent")){          //Analog to A653应用
                 PPub = Double.parseDouble(pubRDIU.getRefreshPeriod().toString());
                 AsyncDelay = calculatePSub(subEndApp);
                 return AsyncDelay;
@@ -331,7 +331,7 @@ public class AsyncDelay {
         }
         else if (pubPort.getType().equals("HFSamplingPort") || pubPort.getType().equals("HFQueuingPort")) {
             // 场景6:A664->A653
-            if (subPort.getType().equals("A653Application")) {
+            if (subPort.getType().equals("A653ApplicationComponent")) {
                 // 计算发送端的PPub
                 PPub = calculatePPub(pubEndApp);
                 // 直接计算得出最终的异步延迟

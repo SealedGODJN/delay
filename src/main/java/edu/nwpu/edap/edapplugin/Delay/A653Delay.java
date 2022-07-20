@@ -90,13 +90,14 @@ public class A653Delay {
         }
 
         //发送端类型为A653
-        if (sub.getType().equals("A653Application")) {
+        if (sub.getType().equals("A653ApplicationComponent")) {
             String subFullATA = sub.getAta();
             String subATA = "";
             Pattern p = Pattern.compile("\\d");
             Matcher m = p.matcher(subFullATA);
             while(m.find()) {
-                subATA = m.group();
+                // m.group() 一次只匹配一个数字
+                subATA += m.group();
             }
             if (subATA.equals("")) {
                 System.out.println("===========找不到接收端终端的ATA号===========");
