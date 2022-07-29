@@ -5,9 +5,12 @@ import javafx.scene.Node;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
+import edu.nwpu.edap.edapplugin.bean.RPMessage;
 import edu.nwpu.edap.edapplugin.bean.adn.ACSSwitchNode;
 import edu.nwpu.edap.edapplugin.bean.adn.ARSSwitchNode;
 import edu.nwpu.edap.edapplugin.bean.device.BaseDeviceAndSwitchNode;
@@ -21,7 +24,7 @@ import edu.nwpu.edap.edapplugin.ui.myTreeStrc.BubbleNode;
 
 /**
  * 结点区域：结点的容器类
- * 
+ *
  * @author Wren
  * @date 2022年2月25日
  *
@@ -32,6 +35,14 @@ public class BubbleArea extends Pane {
 	private ArrayList<Bubble> bubbleArrayList = new ArrayList<Bubble>();
 	private ArrayList<Anchor> anchorArrayList = new ArrayList<Anchor>();
 	private ArrayList<Connector> lines = new ArrayList<Connector>();
+	private ArrayList<Connector> AllLine = new ArrayList<Connector>();
+	/**
+	 * @return the allLine
+	 */
+	public ArrayList<Connector> getAllLine() {
+		return AllLine;
+	}
+
 	private Node selectedNode;
 	private String selectedNodeType;
 	private DelayAnalysisPage root;
@@ -55,17 +66,6 @@ public class BubbleArea extends Pane {
 
 	/**
 	 * 有参构造函数
-	 * 
-	 * @param hardware
-	 * @param root
-	 * @param x
-	 * @param y
-	 * @param nodeType
-	 * @param nodeName
-	 * @param leftPnPort
-	 * @param rightPnPort
-	 * @param leftSwPort
-	 * @param rightSwPort
 	 * @return
 	 * @throws IOException
 	 */
@@ -114,45 +114,45 @@ public class BubbleArea extends Pane {
 		int pubPortSW;
 
 		switch (h.getType()) {
-		case "LRU":
-			LRUAppNode nodeLRU = (LRUAppNode) node;
-			port = nodeLRU.getPort();
-			addAnchor(bubble, nodeLRU.getDirect(), -1, port, null);
-			break;
+			case "LRU":
+				LRUAppNode nodeLRU = (LRUAppNode) node;
+				port = nodeLRU.getPort();
+				addAnchor(bubble, nodeLRU.getDirect(), -1, port, null);
+				break;
 
-		case "RIU":
-			RIUAppNode nodeRIU = (RIUAppNode) node;
-			subPort = nodeRIU.getSubPort();
-			pubPort = nodeRIU.getPubPort();
-			addAnchor(bubble, "sub", -1, subPort, null);
-			addAnchor(bubble, "pub", -1, pubPort, null);
-			break;
+			case "RIU":
+				RIUAppNode nodeRIU = (RIUAppNode) node;
+				subPort = nodeRIU.getSubPort();
+				pubPort = nodeRIU.getPubPort();
+				addAnchor(bubble, "sub", -1, subPort, null);
+				addAnchor(bubble, "pub", -1, pubPort, null);
+				break;
 
-		case "ARS":
-			ARSSwitchNode nodeARS = (ARSSwitchNode) node;
-			subPortSW = nodeARS.getSubPort();
-			pubPortSW = nodeARS.getPubPort();
-			addAnchor(bubble, "sub", subPortSW, null, nodeARS.getHardware());
-			addAnchor(bubble, "pub", pubPortSW, null, nodeARS.getHardware());
-			break;
+			case "ARS":
+				ARSSwitchNode nodeARS = (ARSSwitchNode) node;
+				subPortSW = nodeARS.getSubPort();
+				pubPortSW = nodeARS.getPubPort();
+				addAnchor(bubble, "sub", subPortSW, null, nodeARS.getHardware());
+				addAnchor(bubble, "pub", pubPortSW, null, nodeARS.getHardware());
+				break;
 
-		case "ACS":
-			ACSSwitchNode nodeACS = (ACSSwitchNode) node;
-			subPortSW = nodeACS.getSubPort();
-			pubPortSW = nodeACS.getPubPort();
-			addAnchor(bubble, "sub", subPortSW, null, nodeACS.getHardware());
-			addAnchor(bubble, "pub", pubPortSW, null, nodeACS.getHardware());
-			break;
+			case "ACS":
+				ACSSwitchNode nodeACS = (ACSSwitchNode) node;
+				subPortSW = nodeACS.getSubPort();
+				pubPortSW = nodeACS.getPubPort();
+				addAnchor(bubble, "sub", subPortSW, null, nodeACS.getHardware());
+				addAnchor(bubble, "pub", pubPortSW, null, nodeACS.getHardware());
+				break;
 
-		case "GPM":
-			GPMAppNode nodeGPM = (GPMAppNode) node;
-			port = nodeGPM.getPort();
-			port = nodeGPM.getPort();
-			addAnchor(bubble, nodeGPM.getDirect(), -1, port, null);
-			break;
+			case "GPM":
+				GPMAppNode nodeGPM = (GPMAppNode) node;
+				port = nodeGPM.getPort();
+				port = nodeGPM.getPort();
+				addAnchor(bubble, nodeGPM.getDirect(), -1, port, null);
+				break;
 
-		default:
-			break;
+			default:
+				break;
 		}
 
 		return this.aTree;
@@ -161,7 +161,7 @@ public class BubbleArea extends Pane {
 
 	/**
 	 * 新建锚点视图 -- 代码可以删减
-	 * 
+	 *
 	 * @param parent
 	 * @param direct
 	 * @param swPort
@@ -302,7 +302,7 @@ public class BubbleArea extends Pane {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param treeRoot
 	 * @param target
 	 * @return
@@ -349,7 +349,7 @@ public class BubbleArea extends Pane {
 
 	/**
 	 * 绑定锚点到父节点的工具方法
-	 * 
+	 *
 	 * @param parent
 	 * @param anchor
 	 * @param direct
@@ -379,8 +379,11 @@ public class BubbleArea extends Pane {
 
 	/**
 	 * 绘制传输线
-	 * 
-	 * @param anchors 传输线的端点列表
+	 * 能够递归的绘制
+	 *
+	 * AnchorNode tree 是树形结构，其属性data是树的根节点的值，也是anchor树的根节点（代表最初发送端的发送端口）
+	 *
+	 * @param tree 传输线的端点列表
 	 */
 	public void addLine(AnchorNode tree) {
 
@@ -412,6 +415,43 @@ public class BubbleArea extends Pane {
 
 	}
 
+	/**添加rp消息
+	 *
+	 */
+	public void addLine(AnchorNode tree, ArrayList<RPMessage> msgs) {
+
+		Anchor startAnchor = null;
+		Anchor endAnchor;
+
+		if (tree.getData() != null) {
+			if (tree.getData().getDirect().equals("pub")) {
+				startAnchor = tree.getData();
+			}
+		}
+		if (tree.getChildList() == null || tree.getChildList().size() == 0) {
+			return;
+		} else {
+			int childNumber = tree.getChildList().size();
+			for (int i = 0; i < childNumber; i++) {
+				AnchorNode child = tree.getChildList().get(i);
+
+				endAnchor = child.getData();
+				if (startAnchor != null) {
+					paintLine(startAnchor, endAnchor, msgs); //rp消息
+				}
+
+				addLine(child);
+			}
+		}
+
+		return;
+	}
+
+	/**
+	 * 绘制传输线
+	 * @param startAnchor
+	 * @param endAnchor
+	 */
 	public void paintLine(Anchor startAnchor, Anchor endAnchor) {
 		Bubble sParent = startAnchor.getMyParent();
 		Bubble eParent = endAnchor.getMyParent();
@@ -443,7 +483,92 @@ public class BubbleArea extends Pane {
 
 			bindAnchor(sParent, startAnchor, "right");
 			bindAnchor(eParent, endAnchor, "left");
+
 			line = new Connector(startAnchor, endAnchor);
+//			double textX = (line.endXProperty().get() + line.startXProperty().get()) / 2;
+//			double textY = (line.endYProperty().get() + line.startYProperty().get()) / 2;
+//			Text text = new Text(textX, textY, "delay");
+
+			Group group = new Group();
+
+			if (sParent.equals(eParent)) {
+
+				sParent.getLeftAnchors().remove(endAnchor);
+				sParent.setLeftPortNum(sParent.getLeftPortNum() - 1);
+				sParent.getRightAnchors().add(endAnchor);
+				sParent.setRightPortNum(sParent.getRightPortNum() + 1);
+
+				int rightNum = sParent.getRightAnchors().size();
+				double newH = 30 + (rightNum - 1) * 5 + rightNum * 10;
+
+				sParent.getCoverRectangle().setHeight(newH);
+				sParent.getTitleLabel().setPrefHeight(newH);
+
+				endAnchor.setOrder(endAnchor.getOrder() + rightNum - 1);
+
+				endAnchor.setLayoutX(startAnchor.getLayoutX());
+				endAnchor.setLayoutY(startAnchor.getLayoutY() + (endAnchor.getOrder() - startAnchor.getOrder()) * 15);
+
+				endAnchor.helpX
+						.bind(sParent.layoutXProperty().add(sParent.getCoverRectangle().getWidth()).add(ANCHOR_WIDTH));
+				endAnchor.helpY.bind(sParent.layoutYProperty().add(initSpace + endAnchor.getOrder() * midSpace));
+
+				group.getChildren().addAll(sParent, line);
+//				group.getChildren().addAll(sParent, line, text);
+			} else {
+				group.getChildren().addAll(sParent, eParent, line);
+//				group.getChildren().addAll(sParent, eParent, line, text);
+			}
+
+			line.setStartAnchor(startAnchor);
+			line.setEndAnchor(endAnchor);
+			line.toBack();
+			AllLine.add(line); // 添加所有的line
+			this.getChildren().add(group);
+
+		}
+	}
+
+	/**
+	 * 绘制传输线+高亮传输线
+	 * @param startAnchor
+	 * @param endAnchor
+	 */
+	public void paintLine(Anchor startAnchor, Anchor endAnchor, ArrayList<RPMessage> msgs) {
+		Bubble sParent = startAnchor.getMyParent();
+		Bubble eParent = endAnchor.getMyParent();
+
+		Connector line = null;
+		boolean flag = true;
+
+		if (!lines.isEmpty()) { // 如果全局连接线集合不为空
+
+			for (int j = 0; j < lines.size(); j++) {
+				Connector l = lines.get(j);
+				if (l.getStartAnchor().equals(startAnchor) && l.getEndAnchor().equals(endAnchor)) {
+					line = l;
+					flag = false;
+					break; // 找到了返回
+				}
+			}
+
+		}
+		if (lines.isEmpty() || flag) {
+
+			if (!sParent.getChildren().contains(startAnchor)) {
+				sParent.getChildren().add(startAnchor);
+			}
+
+			if (!eParent.getChildren().contains(endAnchor)) {
+				eParent.getChildren().add(endAnchor);
+			}
+
+			bindAnchor(sParent, startAnchor, "right");
+			bindAnchor(eParent, endAnchor, "left");
+
+			// 分析rpMessage
+			line = new Connector(startAnchor, endAnchor, msgs); //毛修改
+//			line = new Connector(startAnchor, endAnchor);
 
 			Group group = new Group();
 
@@ -477,6 +602,7 @@ public class BubbleArea extends Pane {
 			line.setStartAnchor(startAnchor);
 			line.setEndAnchor(endAnchor);
 			line.toBack();
+			AllLine.add(line); // 把新建的line添加到AllLine集合，在高亮的时候，就可以从AllLine中获取所有的line
 
 			this.getChildren().add(group);
 
@@ -485,7 +611,7 @@ public class BubbleArea extends Pane {
 
 	/**
 	 * 切换选中节点并更改样式
-	 * 
+	 *
 	 * @param node
 	 * @param type
 	 */

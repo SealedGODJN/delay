@@ -1,18 +1,23 @@
 package edu.nwpu.edap.edapplugin.bean;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.careri.as.businessmodel.model.RPDefType;
+
 import edu.nwpu.edap.edapplugin.bean.adn.ADNPart;
 import edu.nwpu.edap.edapplugin.bean.adn.SwitchNode;
 import edu.nwpu.edap.edapplugin.bean.device.BaseDeviceAndSwitchNode;
 import edu.nwpu.edap.edapplugin.bean.device.EndAppNode;
 import edu.nwpu.edap.edapplugin.bean.device.RIUAppNode;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class RPMessage {
 
-    private double AsyncDelay;//给RP消息添加异步延迟属性
+    private double a653QueueDelay;
+
+    private double asyncDelay;
+
+    private double a653ScheduleDelay;
 
     private String rpGuid;
 
@@ -187,8 +192,55 @@ public class RPMessage {
 
     @Override
     public String toString() {
-        return "RPMessage [rpGuid=" + rpGuid + ", pubGuid=" + pubGuid + ", rpDef=" + rpDef + ", pubEndApp=" + pubEndApp
-                + ", subEndApp=" + subEndApp + ", pubRDIU=" + pubRDIU + ", subRDIU=" + subRDIU + ", scenarioId="
-                + scenarioId + ", adnPart=" + adnPart + ", isLocal=" + isLocal + "]";
+//		return "RPMessage [rpGuid=" + rpGuid + ", pubGuid=" + pubGuid + ", rpDef=" + rpDef + ", pubEndApp=" + pubEndApp
+//				+ ", subEndApp=" + subEndApp + ", pubRDIU=" + pubRDIU + ", subRDIU=" + subRDIU + ", scenarioId="
+//				+ scenarioId + ", adnPart=" + adnPart + ", isLocal=" + isLocal + "]";
+        return "RPMessage [rpGuid=" + rpGuid + "\n" + "pubGuid=" + pubGuid + "\n" + "rpDef=" + rpDef + "\n" + "\tpubEndApp=" + pubEndApp + "\n"
+                + "\tsubEndApp=" + subEndApp + "\n" + "\t\tpubRDIU=" + pubRDIU + "\n" + "\t\tsubRDIU=" + subRDIU + "\n" + "\t\t\tscenarioId="
+                + scenarioId + "\n" + "\t\tadnPart=" + adnPart + "\n" + "isLocal=" + isLocal + "]";
     }
+
+    /**
+     * @return the asyncDelay
+     */
+    public double getAsyncDelay() {
+        return asyncDelay;
+    }
+
+    /**
+     * @param asyncDelay the asyncDelay to set
+     */
+    public void setAsyncDelay(double asyncDelay) {
+        this.asyncDelay = asyncDelay;
+    }
+
+    /**
+     * @return the a653ScheduleDelay
+     */
+    public double getA653ScheduleDelay() {
+        return a653ScheduleDelay;
+    }
+
+    /**
+     * @param a653ScheduleDelay the a653ScheduleDelay to set
+     */
+    public void setA653ScheduleDelay(double a653ScheduleDelay) {
+        this.a653ScheduleDelay = a653ScheduleDelay;
+    }
+
+    /**
+     * @return the a653QueueDelay
+     */
+    public double getA653QueueDelay() {
+        return a653QueueDelay;
+    }
+
+    /**
+     * @param a653QueueDelay the a653QueueDelay to set
+     */
+    public void setA653QueueDelay(double a653QueueDelay) {
+        this.a653QueueDelay = a653QueueDelay;
+    }
+
+
 }

@@ -17,7 +17,7 @@ import javafx.scene.text.Font;
 
 /**
  * 绘制区域：网络拓扑图的容器类
- * 
+ *
  * @author Wren
  * @date 2022年2月25日
  *
@@ -29,6 +29,14 @@ public class PaintArea extends StackPane {
 	private DelayAnalysisPage delayAnalysisPage;
 
 	private BubbleArea bubbleArea;
+
+	public BubbleArea getBubbleArea() {
+		return bubbleArea;
+	}
+
+	public void setBubbleArea(BubbleArea bubbleArea) {
+		this.bubbleArea = bubbleArea;
+	}
 
 	public PaintArea() {
 

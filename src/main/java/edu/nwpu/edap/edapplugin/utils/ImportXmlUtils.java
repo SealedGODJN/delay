@@ -1,18 +1,16 @@
 package edu.nwpu.edap.edapplugin.utils;
 
-import edu.nwpu.edap.edapplugin.bean.external.sceneConfig.DeviceNode;
-import edu.nwpu.edap.edapplugin.bean.external.sceneConfig.Scenario;
-import edu.nwpu.edap.edapplugin.exception.XMLDocumentException;
-import edu.nwpu.edap.edapplugin.exception.XMLPropertyLossException;
-import edu.nwpu.edap.edapplugin.library.SceneConfigLibrary;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
+import edu.nwpu.edap.edapplugin.bean.external.sceneConfig.DeviceNode;
+import edu.nwpu.edap.edapplugin.bean.external.sceneConfig.Scenario;
+import edu.nwpu.edap.edapplugin.exception.XMLDocumentException;
+import edu.nwpu.edap.edapplugin.exception.XMLPropertyLossException;
+import edu.nwpu.edap.edapplugin.library.SceneConfigLibrary;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -20,36 +18,40 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+
 public class ImportXmlUtils {
-    
+
     public static void importSceneConfigFile(String fileName) {
-    	try {
-    		Document document = loadXML(fileName);
-    		if(document == null) {
-    			System.err.println("上传的document为空");
-    			return;
-    		}
-    		parseSceneConfig(document);
-    	}catch (Exception e) {
-    		e.printStackTrace();
-			// TODO: handle exception
-		}
+        try {
+            Document document = loadXML(fileName);
+            if(document == null) {
+                System.err.println("上传的document为空");
+                return;
+            }
+            parseSceneConfig(document);
+        }catch (Exception e) {
+            e.printStackTrace();
+            // TODO: handle exception
+        }
     }
-    
+
     public static <T> T convertXmlFileToObject(Class<T> clazz,String filePath) {
-    	Object xmlObject = null;
-    	try {
-    		JAXBContext context = JAXBContext.newInstance(clazz);
-    		Unmarshaller unmarshaller = context.createUnmarshaller();
-    		FileReader fr = null;
-    		fr = new FileReader(filePath);
-    		xmlObject = unmarshaller.unmarshal(fr);
-    	}catch (FileNotFoundException fnfe) {
-			fnfe.printStackTrace();
-		}catch (JAXBException jaxbe) {
-			jaxbe.printStackTrace();
-		}
-    	return (T)xmlObject;
+        Object xmlObject = null;
+        try {
+            JAXBContext context = JAXBContext.newInstance(clazz);
+            Unmarshaller unmarshaller = context.createUnmarshaller();
+            FileReader fr = null;
+            fr = new FileReader(filePath);
+            xmlObject = unmarshaller.unmarshal(fr);
+        }catch (FileNotFoundException fnfe) {
+            fnfe.printStackTrace();
+        }catch (JAXBException jaxbe) {
+            jaxbe.printStackTrace();
+        }
+        return (T)xmlObject;
     }
 
     /***
@@ -59,14 +61,14 @@ public class ImportXmlUtils {
      * return
      */
     private static Document loadXML(String filename) throws XMLDocumentException{
-    	Document document;
+        Document document;
         try{
             SAXReader saxReader = new SAXReader();
             document = saxReader.read(new File(filename));
         }catch (DocumentException e){
             throw new XMLDocumentException(e.getMessage());
         }
-		return document;
+        return document;
     }
 
     /**
@@ -111,7 +113,7 @@ public class ImportXmlUtils {
             scenario.mapDeviceNode2Map();
             boolean isValid = scenario.check();
             if(!isValid) {
-            	System.err.println("该场景不符合条件"+scenario.getId());
+                System.err.println("该场景不符合条件"+scenario.getId());
             }
             scenarios.add(scenario);
         }

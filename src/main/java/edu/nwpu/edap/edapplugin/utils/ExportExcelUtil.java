@@ -18,17 +18,17 @@ import java.util.List;
 
 public class ExportExcelUtil {
 
-	public static void exportExcel(Class clazz,List<Report> list, String pathName, String fileName) {
+	public static void exportExcel(Class clazz,List<Report> list, String pathName) {
 
 		if (pathName == null) {
 			System.err.println("未输入导出文件路径的名称，默认指定为H盘");
 			pathName = "E:\\";
 		}
-		if (fileName == null) {
-			System.err.println("未输入导出文件的名称，默认指定为端到端延迟分析数据");
-			fileName = "端到端延迟分析数据";
-		}
-		String outputFile = pathName + fileName + ".xlsx";
+//		if (fileName == null) {
+//			System.err.println("未输入导出文件的名称，默认指定为端到端延迟分析数据");
+//			fileName = "端到端延迟分析数据";
+//		}
+		String outputFile = pathName;
 		XSSFWorkbook wb = new XSSFWorkbook();
 		XSSFSheet sheet = wb.createSheet("Sheet1");
 		XSSFRow row = sheet.createRow(0);
@@ -91,5 +91,21 @@ public class ExportExcelUtil {
 			jsonObjects.add(jsonObject);
 		});
 		return jsonObjects;
+	}
+
+	public static List<Report> generateReport() {
+		List<Report> reportList = new ArrayList<>();
+		for (int i = 1; i < 100; i++) {
+			Report report = new Report();
+			report.setKey(i);
+			reportList.add(report);
+		}
+		return reportList;
+	}
+
+	public static void main(String[] args) {
+		List<Report> reportList = generateReport();
+		ExportExcelUtil.exportExcel(Report.class, reportList, "C:\\Users\\hjn\\Desktop\\1.xlsx");
+		System.out.println("=========输出成功=========");
 	}
 }

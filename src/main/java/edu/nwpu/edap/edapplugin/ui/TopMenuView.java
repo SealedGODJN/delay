@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import com.careri.as.workbench.api.exception.WorkbenchException;
 import edu.nwpu.edap.edapplugin.handlers.ConstructSceneHandler;
 import edu.nwpu.edap.edapplugin.handlers.ProgressBarHandler;
 import edu.nwpu.edap.edapplugin.handlers.UIControlHandler;
@@ -73,6 +74,8 @@ public class TopMenuView {
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+				} catch (WorkbenchException e) {
+					throw new RuntimeException(e);
 				}
 				ConstructSceneHandler constructSceneHandler = new ConstructSceneHandler();
 				constructSceneHandler.execute();
@@ -137,7 +140,7 @@ public class TopMenuView {
 		
 	}
 	
-	private void loadDataTransmissionView() throws IOException {
+	private void loadDataTransmissionView() throws IOException, WorkbenchException {
 		mainView.showDataTransmissionView();
 	}
 	

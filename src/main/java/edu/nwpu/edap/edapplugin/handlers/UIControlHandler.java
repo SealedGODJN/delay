@@ -1,5 +1,6 @@
 package edu.nwpu.edap.edapplugin.handlers;
 
+import com.careri.as.workbench.api.exception.WorkbenchException;
 import edu.nwpu.edap.edapplugin.log.OutputLog;
 import edu.nwpu.edap.edapplugin.test.TestView;
 import edu.nwpu.edap.edapplugin.ui.DelayAnalysisPage;
@@ -63,7 +64,7 @@ public class UIControlHandler {
 	 * show the data transmission page
 	 * @throws IOException 
 	 */
-	public void showDataTransmissionView() throws IOException {
+	public void showDataTransmissionView() throws IOException, WorkbenchException {
 //		DataTransmissionView dataTransmissionView = new DataTransmissionView();
 //		dataTransmissionView.setMainPane(this);
 //		pane.setCenter(dataTransmissionView.getRoot());
